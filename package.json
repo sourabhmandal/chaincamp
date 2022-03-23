@@ -1,5 +1,5 @@
 {
-  "name": "notionkit",
+  "name": "inctoolsio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
     "lint": "next lint",
     "lint:fix": "next lint . --fix",
     "hasura:console": "hasura console --project hasura",
-    "generate": "graphql-codegen -r dotenv/config --config codegen.yml",
     "prepare": "husky install"
   },
   "dependencies": {
