@@ -6,8 +6,16 @@ import { BellIcon, ThreeBarsIcon, XIcon } from '@primer/octicons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@primer/react';
+import { TEST_QUERY } from '../graphql/queries';
+import { useQuery } from '@apollo/client';
 
 export function Navbar() {
+  const { loading, error, data } = useQuery(TEST_QUERY);
+
+  if (loading) console.log(loading, data);
+  if (error) console.log(error, data);
+  if (data) console.log(data);
+
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
     { name: 'Team', href: '#', current: false },
