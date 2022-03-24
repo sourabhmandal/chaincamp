@@ -8,18 +8,19 @@ import Link from 'next/link';
 import { Button } from '@primer/react';
 import { TEST_QUERY } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
+import Google from '../assets/google.svg';
 
 export function Navbar() {
   const { loading, error, data } = useQuery(TEST_QUERY);
 
-  if (loading) console.log(loading, data);
-  if (error) console.log(error, data);
-  if (data) console.log(data);
+  // if (loading) console.log(loading, data);
+  // if (error) console.log(error, data);
+  // if (data) console.log(data);
 
   const navigation = [
     { name: 'Dashboard', href: '#', current: true },
     { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
+    { name: 'Login with Google', href: '#', current: false },
     { name: 'Calendar', href: '#', current: false }
   ];
 
@@ -52,14 +53,15 @@ export function Navbar() {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <Link
-                    passHref
-                    key={navigation[2].name}
-                    href={navigation[2].href}>
-                    <Button variant="primary" className="btn-mktg">
-                      {navigation[2].name}
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={() => {
+                      window.location.href =
+                        'http://localhost:7003/auth/google/login';
+                    }}
+                    variant="primary"
+                    className="btn-mktg">
+                    {navigation[2].name}
+                  </Button>
                 </div>
               </div>
             </div>
