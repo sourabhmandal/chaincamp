@@ -38,7 +38,11 @@ export const AuthProvider: FC<AuthProviderProps> = props => {
     }
     const refreshToken = getCookie('refreshToken');
     console.log(verifyJWT(refreshToken?.toString()!));
-    setIsAuthenticated(verifyJWT(refreshToken?.toString()!));
+    if (!verifyJWT(refreshToken?.toString()!)) {
+      setIsAuthenticated(false);
+      logout();
+    }
+    
   }, []);
 
   const login = async (
