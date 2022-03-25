@@ -9,15 +9,13 @@ import { CookiesProvider } from 'react-cookie';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <CookiesProvider>
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={baseTheme}>
-          <AuthProvider>
-            <Component {...pageProps} />
-          </AuthProvider>
-        </ThemeProvider>
-      </ApolloProvider>
-    </CookiesProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={baseTheme}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   );
 }
 

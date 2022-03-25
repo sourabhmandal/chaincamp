@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie';
 import Router, { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '../hooks/use-auth';
+import { frontendRoute } from '../constants/routes';
 
 type Props = {
   accessToken: string;
@@ -19,7 +20,7 @@ const Sessions: NextPage<Props> = ({ accessToken, refreshToken }) => {
   useEffect(() => {
     (async () => {
       await login(accessToken, refreshToken);
-      router.push(`${process.env.NEXT_PUBLIC_APP}/dashboard`);
+      router.push(frontendRoute.DASHBOARD);
     })();
   }, []);
 
@@ -53,11 +54,10 @@ Sessions.getInitialProps = async (ctx): Promise<any> => {
 
     // Setting http-only cookies on client
     const { accessToken, refreshToken } = ctx.query;
-    //Router.push('/dashboard');
     return { accessToken, refreshToken };
   } catch (err) {
     console.error(err);
-    Router.push('/');
+    Router.push(frontendRoute.LANDING);
   }
   return {};
 };

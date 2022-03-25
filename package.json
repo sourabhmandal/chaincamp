@@ -17,6 +17,7 @@
     "@primer/octicons-react": "^17.0.0",
     "@primer/react": "^35.0.1",
     "@types/react-dom": "^17.0.13",
+    "cookies-next": "^2.0.4",
     "graphql": "^16.3.0",
     "graphql-tag": "^2.12.6",
     "heroicons": "^1.0.6",

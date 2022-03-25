@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { Button } from '@primer/react';
 import { TEST_QUERY } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
-import Google from '../assets/google.svg';
+import { backendRoute } from '../constants/routes';
 
 export function Navbar() {
   const { loading, error, data } = useQuery(TEST_QUERY);
@@ -55,8 +55,7 @@ export function Navbar() {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <Button
                     onClick={() => {
-                      window.location.href =
-                        'http://localhost:7003/auth/google/login';
+                      window.location.href = backendRoute.GOOGLE_LOGIN;
                     }}
                     variant="primary"
                     className="btn-mktg">

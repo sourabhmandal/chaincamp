@@ -1,23 +1,23 @@
-import { Cookies, useCookies } from 'react-cookie';
-import React, { FC, ReactNode } from 'react';
+import { checkCookies, setCookies, removeCookies } from 'cookies-next';
+import React, { FC, ReactNode, useState } from 'react';
 import { createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
-
-interface State {}
+import { Router, useRouter } from 'next/router';
+import { frontendRoute } from '../constants/routes';
 
 export interface AuthContextValue {
-  authcookies: { accessToken?: string; refreshToken?: string };
+  isAuthenticated: boolean;
+  accessToken?: string;
+  refreshToken?: string;
   login: (accessToken: string, refreshToken: string) => Promise<void>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue>({
-  authcookies: {
-    accessToken: '',
-    refreshToken: ''
-  },
+  isAuthenticated: false,
+  accessToken: '',
+  refreshToken: '',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   refresh: () => Promise.resolve()
@@ -25,49 +25,57 @@ export const AuthContext = createContext<AuthContextValue>({
 
 export const AuthProvider: FC<AuthProviderProps> = props => {
   const { children } = props;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+  const [refreshToken, setRefreshToken] = useState('');
   const router = useRouter();
-  const [authcookies, setAuthCookie, removeAuthCookie] = useCookies([
-    'accessToken',
-    'refreshToken'
-  ]);
 
   useEffect(() => {
-    if (authcookies.refreshToken && authcookies.refreshToken)
-      router.push('/dashboard');
+    const accessToken = checkCookies('accessToken');
+    const refreshToken = checkCookies('refreshToken');
+    if (accessToken && refreshToken) {
+      console.log('AUTH CONTEXT', 'is Authenticated');
+      router.push(frontendRoute.DASHBOARD);
+      setIsAuthenticated(true);
+    }
   }, []);
 
   const login = async (
     accessToken: string,
     refreshToken: string
   ): Promise<void> => {
-    setAuthCookie('accessToken', accessToken, {
+    setCookies('accessToken', accessToken, {
       httpOnly: false,
       maxAge: 3600
     });
-    setAuthCookie('refreshToken', refreshToken, {
+    setCookies('refreshToken', refreshToken, {
       httpOnly: false,
       maxAge: 3600
     });
+    setIsAuthenticated(true);
   };
 
   const logout = async (): Promise<void> => {
     // Request server to logout user profile and remove its session
-    removeAuthCookie('accessToken');
-    removeAuthCookie('refreshToken');
+    removeCookies('accessToken');
+    removeCookies('refreshToken');
   };
 
+  // add as middleware
   const refresh = async (): Promise<void> => {
     // refresh api call
     const accessToken = '';
     const refreshToken = '';
-    setAuthCookie('accessToken', accessToken);
-    setAuthCookie('refreshToken', refreshToken);
+    setCookies('accessToken', accessToken);
+    setCookies('refreshToken', refreshToken);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        authcookies,
+        isAuthenticated,
+        accessToken,
+        refreshToken,
         login,
         logout,
         refresh

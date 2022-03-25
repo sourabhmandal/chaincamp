@@ -8,8 +8,18 @@ import TwoCards from '../components/landing/TwoCards';
 import FeatureTimeline from '../components/landing/FeatureTimeline';
 import Footer from '../components/landing/Footer';
 import VideoGuide from '../components/landing/VideoGuide';
+import { useAuth } from '../hooks/use-auth';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { frontendRoute } from '../constants/routes';
 
 const Home: NextPage = () => {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (isAuthenticated) router.push(frontendRoute.DASHBOARD);
+    return () => {};
+  }, []);
   return (
     <BaseStyles>
       <Head>
