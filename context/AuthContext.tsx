@@ -15,14 +15,12 @@ export interface AuthContextValue {
   isAuthenticated: boolean;
   login: (accessToken: string, refreshToken: string) => Promise<void>;
   logout: () => Promise<void>;
-  refresh: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
   login: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  refresh: () => Promise.resolve()
+  logout: () => Promise.resolve()
 });
 
 export const AuthProvider: FC<AuthProviderProps> = props => {
@@ -42,7 +40,6 @@ export const AuthProvider: FC<AuthProviderProps> = props => {
       setIsAuthenticated(false);
       logout();
     }
-    
   }, []);
 
   const login = async (
@@ -66,22 +63,12 @@ export const AuthProvider: FC<AuthProviderProps> = props => {
     removeCookies('refreshToken');
   };
 
-  // add as middleware
-  const refresh = async (): Promise<void> => {
-    // refresh api call
-    const accessToken = '';
-    const refreshToken = '';
-    setCookies('accessToken', accessToken);
-    setCookies('refreshToken', refreshToken);
-  };
-
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
         login,
-        logout,
-        refresh
+        logout
       }}>
       {children}
     </AuthContext.Provider>
