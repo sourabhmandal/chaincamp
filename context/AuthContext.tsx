@@ -1,14 +1,18 @@
-import { checkCookies, setCookies, removeCookies } from 'cookies-next';
+import {
+  checkCookies,
+  setCookies,
+  removeCookies,
+  getCookie
+} from 'cookies-next';
 import React, { FC, ReactNode, useState } from 'react';
 import { createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Router, useRouter } from 'next/router';
 import { frontendRoute } from '../constants/routes';
+import { verifyJWT } from '../utils/jwt';
 
 export interface AuthContextValue {
   isAuthenticated: boolean;
-  accessToken?: string;
-  refreshToken?: string;
   login: (accessToken: string, refreshToken: string) => Promise<void>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
@@ -16,8 +20,6 @@ export interface AuthContextValue {
 
 export const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
-  accessToken: '',
-  refreshToken: '',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   refresh: () => Promise.resolve()
@@ -26,18 +28,17 @@ export const AuthContext = createContext<AuthContextValue>({
 export const AuthProvider: FC<AuthProviderProps> = props => {
   const { children } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
-  const [refreshToken, setRefreshToken] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    const accessToken = checkCookies('accessToken');
-    const refreshToken = checkCookies('refreshToken');
-    if (accessToken && refreshToken) {
-      console.log('AUTH CONTEXT', 'is Authenticated');
-      router.push(frontendRoute.DASHBOARD);
+    const accessTokenCheck = checkCookies('accessToken');
+    const refreshTokenCheck = checkCookies('refreshToken');
+    if (accessTokenCheck && refreshTokenCheck) {
       setIsAuthenticated(true);
     }
+    const refreshToken = getCookie('refreshToken');
+    console.log(verifyJWT(refreshToken?.toString()!));
+    setIsAuthenticated(verifyJWT(refreshToken?.toString()!));
   }, []);
 
   const login = async (
@@ -74,8 +75,6 @@ export const AuthProvider: FC<AuthProviderProps> = props => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        accessToken,
-        refreshToken,
         login,
         logout,
         refresh
