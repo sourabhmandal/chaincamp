@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+
+const withTM = require("next-transpile-modules")([
+  "@fullcalendar/common",
+  "@babel/preset-react",
+  "@fullcalendar/common",
+  "@fullcalendar/daygrid",
+  "@fullcalendar/interaction",
+  "@fullcalendar/react",
+  "@fullcalendar/timegrid",
+]);
+
+
+const nextConfig = withTM({
   reactStrictMode: true,
   typescript: {
     tsconfigPath: "./tsconfig.json"
@@ -7,6 +20,6 @@ const nextConfig = {
   images: {
     domains: ['tailwindui.com', "images.unsplash.com"],
   },
-}
+})
 
 module.exports = nextConfig

@@ -1,14 +1,20 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-
+import { NextRequest, NextResponse } from 'next/server';
+import { backendRoute, frontendRoute } from '../../constants/routes';
+import { verifyJWT } from '../../utils/jwt';
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import { NextApiRequest, NextApiResponse } from 'next';
 type Data = {
-  name: string
-}
+  name: string;
+};
 
-export default function handler(
+export default withApiAuthRequired(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log('HELLO API');
-  res.status(200).json({ name: 'John Doe' })
-}
+  // set it as auth header
+  const { idToken } = await getSession(req, res);
+  console.log(idToken);
+  res.status(200).json({ name: 'John Doe' });
+});
+

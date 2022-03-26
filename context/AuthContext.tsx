@@ -7,39 +7,62 @@ import {
 import React, { FC, ReactNode, useState } from 'react';
 import { createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { frontendRoute } from '../constants/routes';
-import { verifyJWT } from '../utils/jwt';
+import { decodeAccessJWT, verifyJWT } from '../utils/jwt';
 
 export interface AuthContextValue {
   isAuthenticated: boolean;
+  user: any;
+  setUser: any;
   login: (accessToken: string, refreshToken: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
+  user: {
+    id: 0,
+    role: ''
+  },
+  setUser: undefined,
   login: () => Promise.resolve(),
   logout: () => Promise.resolve()
 });
 
+export type UserData = {
+  id: number | undefined;
+  name?: string | undefined;
+  locale?: string;
+  email?: string;
+  phone?: string;
+  role: string | undefined;
+  created_at?: any;
+  updated_at?: any;
+};
+
 export const AuthProvider: FC<AuthProviderProps> = props => {
   const { children } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const router = useRouter();
+  const [user, setUser] = useState<UserData>({
+    id: 0,
+    role: ''
+  });
 
   useEffect(() => {
-    const accessTokenCheck = checkCookies('accessToken');
-    const refreshTokenCheck = checkCookies('refreshToken');
-    if (accessTokenCheck && refreshTokenCheck) {
+    const accessToken = getCookie('accessToken')?.toString()!;
+    const refreshToken = getCookie('refreshToken')?.toString()!;
+    if (accessToken && refreshToken) {
       setIsAuthenticated(true);
     }
-    const refreshToken = getCookie('refreshToken');
-    console.log(verifyJWT(refreshToken?.toString()!));
-    if (!verifyJWT(refreshToken?.toString()!)) {
+    if (!verifyJWT(refreshToken)) {
       setIsAuthenticated(false);
       logout();
+      return;
     }
+
+    const userdata = decodeAccessJWT(accessToken);
+    setUser({ id: userdata?.sub, role: userdata?.role });
   }, []);
 
   const login = async (
@@ -66,6 +89,8 @@ export const AuthProvider: FC<AuthProviderProps> = props => {
   return (
     <AuthContext.Provider
       value={{
+        user,
+        setUser,
         isAuthenticated,
         login,
         logout
