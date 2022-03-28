@@ -1,17 +1,28 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+
+function max_array(array : ) {
+  return Math.max.apply(null, this);
+}
+
+function min_array(array : [number]) {
+  return Math.min.apply();
+}
+
 export default function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  const id_array: [number] = request.body.input.ids;
+  const min = Math.min(...id_array);
+  const max = Math.max(...id_array);
 
-  const id_array = request.body.input.ids;
-  let id_list: [number] = [Math.floor(Math.random() * 1000)];
+  let id_list: [number] = [Math.floor(Math.random() * (max - min + 1)) + min];
   for (let i = 0; i < 9; i++) {
-    id_list.push(id_array[Math.floor(Math.random() * 1000)]);
+    id_list.push(id_array[Math.floor(Math.random() * (max - min + 1)) + min]);
   }
-  console.log('request.body :: ', request.body);
-  console.log(`id_array :: ${id_array}, id_list :: ${id_list}`);
+  
+  console.log(`min :: ${min}, max :: ${max}, id_list :: ${id_list}`);
   response.status(200).json({
     id_list: id_list
   });
