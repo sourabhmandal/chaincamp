@@ -1,7 +1,7 @@
 import React from 'react';
-import Notionlogo from '../assets/notion-logo.svg';
+import Notionlogo from '/assets/notionlogo.svg';
 import Image from 'next/image';
-import { frontendRoute } from '../../constants/routes';
+import { backendRoute, frontendRoute } from '../../constants/routes';
 
 export default function HeroSection() {
   return (
@@ -27,7 +27,7 @@ export default function HeroSection() {
       </p>
       <div className="grid grid-cols-2 grid-rows-1 gap-4">
         <a
-          href={frontendRoute.LOGIN}
+          href={backendRoute.LOGIN}
           className="mt-5 inline-block py-3 px-7 mb-6 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
           Login and Start
         </a>

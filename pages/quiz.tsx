@@ -15,25 +15,27 @@ function Dashboard() {
   const { user } = useUser();
   const { hasuraUser, setHasuraUser } = useHasuraUser();
 
-  const getUserDetails = async (user_email: string) => {
-    const data = await makeGqlRequest(GET_LOGGED_USER_DETAIL, {
-      user_email: user_email
-    });
-    const resp = await data.json();
-    const newuser = {
-      id: resp.data.users[0].id,
-      name: resp.data.users[0].name,
-      picture: resp.data.users[0].picture_url,
-      email: resp.data.users[0].email,
-      phone: resp.data.users[0].phone,
-      role: resp.data.users[0].role,
-      created_at: resp.data.users[0].created_at,
-      updated_at: resp.data.users[0].updated_at
-    };
-    setHasuraUser(newuser);
-  };
+
 
   useEffect(() => {
+    const getUserDetails = async (user_email: string) => {
+      const data = await makeGqlRequest(GET_LOGGED_USER_DETAIL, {
+        user_email: user_email
+      });
+      const resp = await data.json();
+      const newuser = {
+        id: resp.data.users[0].id,
+        name: resp.data.users[0].name,
+        picture: resp.data.users[0].picture_url,
+        email: resp.data.users[0].email,
+        phone: resp.data.users[0].phone,
+        role: resp.data.users[0].role,
+        created_at: resp.data.users[0].created_at,
+        updated_at: resp.data.users[0].updated_at
+      };
+      setHasuraUser(newuser);
+    };
+
     const user_email = user?.email!;
     if (user_email && hasuraUser.id == 0) {
       (async () => {
@@ -42,7 +44,7 @@ function Dashboard() {
     }
     if (hasuraUser.id != 0) setloading(false);
     return () => {};
-  }, [user, hasuraUser]);
+  }, [user, hasuraUser, setHasuraUser]);
 
   return loading ? (
     <Loader />
@@ -88,16 +90,16 @@ function Dashboard() {
       </div>
 
       <div className="grid grid-cols-4 grid-rows-2 gap-x-8 gap-y-3 mt-8">
-        <button className="bg-green-600 rounded-full px-8 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
+        <button className="bg-green-600 px-8 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
           50/50
         </button>
-        <button className="bg-green-600 rounded-full px-8 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
+        <button className="bg-green-600 px-8 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
           Guess
         </button>
-        <button className="bg-green-600 rounded-full px-7 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
+        <button className="bg-green-600 px-7 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
           Pass
         </button>
-        <button className="bg-green-600 rounded-full px-6 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
+        <button className="bg-green-600 px-6 py-11 rounded-lg text-white ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
           Reveal
         </button>
         <p className="mx-auto font-bold text-center text-lg">3</p>

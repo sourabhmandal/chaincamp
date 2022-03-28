@@ -10,7 +10,7 @@ export default withApiAuthRequired(async function handler(
   res: NextApiResponse<Data>
 ) {
   // set it as auth header
-  const { idToken } = await getSession(req, res);
-  console.log(idToken);
+  const session = await getSession(req, res);
+  console.log(session?.idToken);
   res.status(200).json({ name: 'John Doe' });
 });

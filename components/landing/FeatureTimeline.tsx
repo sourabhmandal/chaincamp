@@ -1,7 +1,7 @@
 import { ZapIcon } from '@primer/octicons-react';
 import Image from 'next/image';
 import React from 'react';
-import notionlogo from '../../assets/notion-logo.svg';
+import notionlogo from '../../assets/notionlogo.svg';
 import unsplash3 from '../../assets/unsplash3.jpg';
 import unsplash4 from '../../assets/unsplash4.jpg';
 

@@ -4,7 +4,7 @@ import { Disclosure } from '@headlessui/react';
 import { ThreeBarsIcon, XIcon } from '@primer/octicons-react';
 import Image from 'next/image';
 import { Button } from '@primer/react';
-import { frontendRoute } from '../constants/routes';
+import { backendRoute, frontendRoute } from '../constants/routes';
 
 export function Navbar() {
   const navigation = [
@@ -27,7 +27,7 @@ export function Navbar() {
         </div>
         <a
           className="inline-block py-2 px-7 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm"
-          href={frontendRoute.LOGIN}>
+          href={backendRoute.LOGIN}>
           {navigation[2].name}
         </a>
       </nav>

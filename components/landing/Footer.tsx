@@ -1,7 +1,7 @@
 import { LogoGithubIcon } from '@primer/octicons-react';
 import Image from 'next/image';
 import React from 'react';
-import nflogo from '../../assets/notion-logo.svg';
+import nflogo from '../../assets/notionlogo.svg';
 
 export default function Footer() {
   return (

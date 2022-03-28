@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (hasuraUser.id != 0) router.push(frontendRoute.DASHBOARD);
     return () => {};
-  }, []);
+  });
 
   return (
     <BaseStyles>
