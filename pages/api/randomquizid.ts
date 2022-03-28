@@ -5,10 +5,12 @@ export default function handler(
   response: NextApiResponse
 ) {
   const id_array: [number] = request.body.input.ids;
-  const min = Math.min(...id_array);
-  const max = Math.max(...id_array);
+  const min = 0;
+  const max = id_array.length;
 
-  let id_list: [number] = [Math.floor(Math.random() * (max - min + 1)) + min];
+  let id_list: [number] = [
+    id_array[Math.floor(Math.random() * (max - min + 1)) + min]
+  ];
   for (let i = 0; i < 9; i++) {
     id_list.push(id_array[Math.floor(Math.random() * (max - min + 1)) + min]);
   }
