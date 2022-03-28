@@ -3,7 +3,7 @@ export const backendRoute = {
   REFRESH_TOKEN: `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/token/refresh`
 };
 export const frontendRoute = {
-  DASHBOARD: `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/dashboard`,
+  DASHBOARD: `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/quiz`,
   ERROR_PAGE: `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/404`,
   LANDING: `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/`,
   DASHBOARD_JOBS: `${process.env.NEXT_PUBLIC_FRONTEND_BASE_URL}/dashboard/jobs`,

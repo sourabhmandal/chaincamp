@@ -1,7 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { NextRequest, NextResponse } from 'next/server';
-import { backendRoute, frontendRoute } from '../../constants/routes';
-import { verifyJWT } from '../../utils/jwt';
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 import { NextApiRequest, NextApiResponse } from 'next';
 type Data = {
@@ -17,4 +14,3 @@ export default withApiAuthRequired(async function handler(
   console.log(idToken);
   res.status(200).json({ name: 'John Doe' });
 });
-

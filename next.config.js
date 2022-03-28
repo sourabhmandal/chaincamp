@@ -18,7 +18,7 @@ const nextConfig = withTM({
     tsconfigPath: "./tsconfig.json"
   },
   images: {
-    domains: ['tailwindui.com', "images.unsplash.com"],
+    domains: ['tailwindui.com', "images.unsplash.com", "shuffle.dev"],
   },
 })
 
