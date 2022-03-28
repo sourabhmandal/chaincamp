@@ -5,7 +5,7 @@ export default function handler(
   response: NextApiResponse
 ) {
 
-  const { min, max } = request.body;
+  const { min, max } = request.body.input.range;
   let id_list: [number] = [Math.floor(Math.random() * (max - min + 1)) + min];
   for (let i = 0; i < 9; i++) {
     id_list.push(Math.floor(Math.random() * (max - min + 1)) + min);
