@@ -3,16 +3,13 @@ import type { AppProps } from 'next/app';
 import '@fullcalendar/common/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
-import { UserProvider } from '@auth0/nextjs-auth0';
-import { AuthProvider } from '../context/AuthContext';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <AuthProvider>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
-    </AuthProvider>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
   );
 }
 

@@ -7,16 +7,16 @@ import TwoCards from '../components/landing/TwoCards';
 import FeatureTimeline from '../components/landing/FeatureTimeline';
 import Footer from '../components/landing/Footer';
 import VideoGuide from '../components/landing/VideoGuide';
-import { useHasuraUser } from '../hooks/getUser';
 import { useRouter } from 'next/router';
 import { frontendRoute } from '../constants/routes';
 import { useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
-  const { hasuraUser } = useHasuraUser();
   const router = useRouter();
+  const session = useSession();
   useEffect(() => {
-    if (hasuraUser.id != 0) router.push(frontendRoute.DASHBOARD);
+    if (session.status == 'authenticated') router.push(frontendRoute.QUIZ);
     return () => {};
   });
 

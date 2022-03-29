@@ -1,7 +1,7 @@
 import { Box, Heading, Text } from '@primer/react';
 import React from 'react';
 
-function ErrorPage() {
+function ErrorPage({ err }: any) {
   return (
     <Box
       display="flex"
@@ -13,7 +13,8 @@ function ErrorPage() {
       <Text
         sx={{ fontSize: 18 }}
         className="text-slate-600">
-        Page Not Found
+        Page Not Found <br />
+        {err}
       </Text>
     </Box>
   );

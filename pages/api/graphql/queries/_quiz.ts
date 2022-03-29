@@ -8,7 +8,7 @@ query MyQuery {
 
 export const GET_RANDOM_QUIZ_IDS = `
 query MyQuery {
-  get_random_quiz_id(range: {max: 10, min: 10}) {
+  get_random_quiz_id(ids: $quiz_ids) {
     id_list
   }
 }

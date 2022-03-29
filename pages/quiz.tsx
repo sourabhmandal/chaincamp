@@ -1,54 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import Loader from '../components/Loader';
-import { useUser } from '@auth0/nextjs-auth0';
-import { useHasuraUser } from '../hooks/getUser';
-import { makeGqlRequest } from './api/graphql/_gqlrest';
-import { GET_LOGGED_USER_DETAIL } from './api/graphql/queries/_user';
+import React, { useEffect } from 'react';
 import {
   ArrowCircleLeftIcon,
   ArrowCircleRightIcon,
   XIcon
 } from '@heroicons/react/solid';
+import { NextPage } from 'next';
+import { GET_ALL_QUIZ_IDS } from './api/graphql/queries/_quiz';
+import { useSession } from 'next-auth/react';
 
-function Dashboard() {
-  const [loading, setloading] = useState<Boolean>(true);
-  const { user } = useUser();
-  const { hasuraUser, setHasuraUser } = useHasuraUser();
+const Dashboard: NextPage = () => {
+  const session = useSession();
 
-
+  const getQuiz = async () => {
+    const res = await fetch('http://localhost:3000/api/graphql/gql', {
+      method: 'POST',
+      headers: {
+        'x-hasura-role': 'user'
+      },
+      body: JSON.stringify({
+        query: GET_ALL_QUIZ_IDS
+      })
+    });
+    const json = await res.json();
+    console.log(json);
+  };
 
   useEffect(() => {
-    const getUserDetails = async (user_email: string) => {
-      const data = await makeGqlRequest(GET_LOGGED_USER_DETAIL, {
-        user_email: user_email
-      });
-      const resp = await data.json();
-      const newuser = {
-        id: resp.data.users[0].id,
-        name: resp.data.users[0].name,
-        picture: resp.data.users[0].picture_url,
-        email: resp.data.users[0].email,
-        phone: resp.data.users[0].phone,
-        role: resp.data.users[0].role,
-        created_at: resp.data.users[0].created_at,
-        updated_at: resp.data.users[0].updated_at
-      };
-      setHasuraUser(newuser);
-    };
-
-    const user_email = user?.email!;
-    if (user_email && hasuraUser.id == 0) {
-      (async () => {
-        await getUserDetails(user_email);
-      })();
-    }
-    if (hasuraUser.id != 0) setloading(false);
-    return () => {};
-  }, [user, hasuraUser, setHasuraUser]);
-
-  return loading ? (
-    <Loader />
-  ) : (
+    getQuiz();
+  }, []);
+  return (
     <div className="sm:flex bg-orange-50 flex-col justify-center items-center w-full h-screen">
       <div className="sm:flex max-w-7xl">
         <div className="text-3xl font-bold px-48 text-center">
@@ -63,6 +43,7 @@ function Dashboard() {
             type="radio"
             checked
             className="mr-4"
+            readOnly
           />
           <span>Option 1</span>
         </div>
@@ -70,6 +51,7 @@ function Dashboard() {
           <input
             type="radio"
             className="mr-4"
+            readOnly
           />
           <span>Option 2</span>
         </div>
@@ -77,6 +59,7 @@ function Dashboard() {
           <input
             type="radio"
             className="mr-4"
+            readOnly
           />
           <span>Option 3</span>
         </div>
@@ -84,6 +67,7 @@ function Dashboard() {
           <input
             type="radio"
             className="mr-4"
+            readOnly
           />
           <span>Option 4</span>
         </div>
@@ -122,6 +106,6 @@ function Dashboard() {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

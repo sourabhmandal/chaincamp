@@ -12,6 +12,7 @@ export default function handler(
 
   const shuffled = id_array.sort(() => 0.5 - Math.random());
   const id_list = shuffled.slice(0, 10);
+
   console.log(`shuffled :: ${shuffled}, id_list :: ${id_list}`);
   response.status(200).json({
     id_list: id_list
