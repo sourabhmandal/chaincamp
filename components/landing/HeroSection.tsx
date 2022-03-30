@@ -1,5 +1,5 @@
 import React from 'react';
-import Notionlogo from '/assets/notionlogo.svg';
+import hasura from '/assets/hasura.svg';
 import Image from 'next/image';
 import { backendRoute, frontendRoute } from '../../constants/routes';
 import { useSession } from 'next-auth/react';
@@ -10,16 +10,16 @@ export default function HeroSection() {
     <div className="w-full text-center flex flex-col items-center bg-gray-100 p-20 leading-10">
       <p className="tracking-tight leading-tight font-black text-6xl">
         <div>Easily build your</div>
-        <div className="text-green-500">Knowledge of Blockchain</div>
+        <div className="text-green-500">Knowledge of Hasura</div>
         <span className="inline-flex items-center justify-center ml-1">
           with
           <Image
             height={50}
             width={70}
-            src={Notionlogo}
+            src={hasura}
             alt="notion-logo"
           />
-          ChainCamp
+          HasuraChamp
         </span>
       </p>
       <br />

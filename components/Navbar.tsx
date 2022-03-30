@@ -1,5 +1,5 @@
 import React from 'react';
-import Tailwindlogo from '../assets/tailwindlogo.svg';
+import hasura from '../assets/hasura.svg';
 import { Disclosure } from '@headlessui/react';
 import { ThreeBarsIcon, XIcon } from '@primer/octicons-react';
 import Image from 'next/image';
@@ -28,7 +28,7 @@ export function Navbar() {
           <Image
             height={40}
             width={100}
-            src={Tailwindlogo}
+            src={hasura}
             alt="Workflow"
           />
         </div>

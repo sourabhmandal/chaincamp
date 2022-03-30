@@ -34,7 +34,7 @@ export default function ResultModal({
           );
           toast.success('saved result');
         } else {
-          toast.error('unable to save result');
+          toast.error('unable to save result. please login');
         }
       })();
     }
