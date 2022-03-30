@@ -15,8 +15,7 @@ export default async function handler(
   }
 
   if (!token) {
-    res.status(400).send({ error: 'no session id' });
-    return;
+    console.log({ error: 'no session id' });
   } else {
     console.log('token found with role', role);
   }
