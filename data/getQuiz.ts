@@ -32,6 +32,7 @@ export const getQuiz = async (size: number) => {
     })
   });
   json = await res.json();
+  console.log(json);
   data = json.data.get_random_quiz_id.id_list;
 
   // get random quiz from random ids
