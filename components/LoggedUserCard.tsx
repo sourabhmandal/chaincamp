@@ -23,7 +23,7 @@ function LoggedUserCard() {
     })();
 
     return () => {};
-  }, []);
+  }, [session]);
 
   return session.status == 'loading' || session.status == 'unauthenticated' ? (
     <Loader />

@@ -19,11 +19,19 @@ import QuitModal from '../../components/quiz/quit';
 import { PlayIcon } from '@primer/octicons-react';
 import { useRouter } from 'next/router';
 
+type QuizQuestion = {
+  question: string;
+  option_list: string[];
+  correct_answer: number;
+};
+
 const Dashboard: NextPage = () => {
   const router = useRouter();
   const { size } = router.query;
   const [currentQuiz, setCurrentQuiz] = useState(0);
-  const [quizlist, setquizlist] = useState([]);
+  const [quizlist, setquizlist] = useState<QuizQuestion[]>([
+    { question: '', option_list: [''], correct_answer: 0 }
+  ]);
   const [loading, setLoading] = useState(true);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const [correct, setcorrect] = useState(0);
@@ -37,15 +45,15 @@ const Dashboard: NextPage = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getQuiz(size);
+      const data = await getQuiz(parseInt(size?.toString()!));
       console.log(data);
       setquizlist(data.id_list);
       setLoading(false);
     })();
-  }, []);
+  }, [size]);
 
   const getResult = async () => {
-    const ans = quizlist.map(quiz => quiz.correct_answer);
+    const ans = quizlist.map((quiz: QuizQuestion) => quiz.correct_answer);
     const { correct, wrong, unattempted } = calculateResult(result, ans);
     setcorrect(correct);
     setwrong(wrong);
@@ -93,6 +101,7 @@ const Dashboard: NextPage = () => {
           <PlayIcon className="h-5 w-5 text-gray-50" />
         </button>
       </div>
+      {/*@ts-ignore*/}
       <QuestionPanel
         question={quizlist[currentQuiz].question}
         option_list={quizlist[currentQuiz].option_list}

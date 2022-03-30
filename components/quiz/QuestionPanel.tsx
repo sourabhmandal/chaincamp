@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import hasura from '../../assets/hasura.svg';
 
 type QuestionPanelProps = {
   q_num: number;
   question: string;
-  option_list: [{}];
+  option_list: string[];
   selectedOpt: number;
   setresult: any;
 };
@@ -40,12 +40,14 @@ function QuestionPanel({
       </div>
       {/*  */}
       <div className="max-w-3xl grid grid-cols-1 grid-rows-4 gap-1 w-full p-8">
-        {option_list.map((opt: object, id: number) => (
+        {option_list.map((opt: string, id: number) => (
           <button
             key={id}
             value={id + 1}
-            onClick={e => {
-              const opt: number = parseInt(e.target.value);
+            onClick={(e: any) => {
+              const opt: number = parseInt(
+                (e.target as HTMLInputElement).value
+              );
               setresult((prev: number[]) => {
                 const newres = [...prev];
                 newres[q_num - 1] = opt;
