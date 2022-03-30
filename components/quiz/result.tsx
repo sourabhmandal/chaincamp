@@ -1,8 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { SparklesIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
-import { Fragment } from 'react';
+import { useRouter } from 'next/router';
+import { Fragment, useEffect } from 'react';
+import { frontendRoute } from '../../constants/routes';
 import { saveResultToDB } from '../../data/calculateResult';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function ResultModal({
   isOpen,
@@ -11,27 +14,37 @@ export default function ResultModal({
   wrong,
   unattempted
 }: any) {
+  const router = useRouter();
   function closeModal() {
     setIsOpen(false);
+    router.push(frontendRoute.QUIZ);
   }
 
   const session = useSession();
 
-  async function saveResult() {
-    if (correct !== 0) {
-      await saveResultToDB(
-        correct,
-        wrong,
-        unattempted,
-        session.data?.user?.email!
-      );
-    } else {
-      //TODO: add alert
+  useEffect(() => {
+    if (isOpen) {
+      (async () => {
+        if (correct !== 0) {
+          await saveResultToDB(
+            correct,
+            wrong,
+            unattempted,
+            session.data?.user?.email!
+          );
+          toast.success('saved result');
+        } else {
+          toast.error('unable to save result');
+        }
+      })();
     }
-  }
+
+    return () => {};
+  }, [isOpen, correct, wrong, session, unattempted]);
 
   return (
     <>
+      <Toaster />
       <Transition
         appear
         show={isOpen}
@@ -98,12 +111,6 @@ export default function ResultModal({
                     className="mr-3 px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={closeModal}>
                     Close
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={saveResult}>
-                    Save Score
                   </button>
                 </div>
               </div>

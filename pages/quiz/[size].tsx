@@ -18,6 +18,7 @@ import ResultModal from '../../components/quiz/result';
 import QuitModal from '../../components/quiz/quit';
 import { PlayIcon } from '@primer/octicons-react';
 import { useRouter } from 'next/router';
+import toast, { Toaster } from 'react-hot-toast';
 
 type QuizQuestion = {
   id: number;
@@ -29,9 +30,7 @@ type QuizQuestion = {
 const Dashboard: NextPage = () => {
   const router = useRouter();
   const [currentQuiz, setCurrentQuiz] = useState(0);
-  const [quizlist, setquizlist] = useState<QuizQuestion[]>([
-    { id: 0, question: '', option_list: ['', '', '', ''], correct_answer: 0 }
-  ]);
+  const [quizlist, setquizlist] = useState<QuizQuestion[]>([]);
   const [loading, setLoading] = useState(true);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const [correct, setcorrect] = useState(0);
@@ -48,8 +47,12 @@ const Dashboard: NextPage = () => {
     if (router.query.size) {
       (async () => {
         const data = await getQuiz(parseInt(size?.toString()!));
-        setquizlist(data);
-        setTimeout(() => setLoading(false), 4000);
+        if (data.length === 0) {
+          toast.error('Could not get quiz from server');
+        } else {
+          setquizlist(data);
+          setLoading(false);
+        }
       })();
     }
   }, [size, router.query]);
@@ -60,7 +63,11 @@ const Dashboard: NextPage = () => {
     setcorrect(correct);
     setwrong(wrong);
     setunattempted(unattempted);
-    setIsResultModalOpen(true);
+    if (unattempted === quizlist.length) {
+      toast.error('please attempt atleast 1 question');
+    } else {
+      setIsResultModalOpen(true);
+    }
   };
   return loading || session.status === 'loading' ? (
     <Loader />

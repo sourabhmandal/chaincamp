@@ -11,7 +11,7 @@ function LoggedUserCard() {
   const [user, setuser] = useState({ name: '', email: '', picture_url: '' });
   useEffect(() => {
     (async () => {
-      const resp = await fetch('http://localhost:3000/api/getuser', {
+      const resp = await fetch(backendRoute.GET_USER, {
         method: 'POST',
         body: JSON.stringify({
           email: session.data?.user?.email
@@ -28,6 +28,11 @@ function LoggedUserCard() {
     <Loader />
   ) : (
     <div className="absolute items-center flex z-10 top-0 right-0 bg-white p-2 rounded-bl-lg border">
+      <a
+        href={frontendRoute.QUIZ}
+        className="inline-block p-2 mr-2 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
+        Quiz
+      </a>
       {user.picture_url ? (
         <Image
           src={user.picture_url}
@@ -50,7 +55,7 @@ function LoggedUserCard() {
       </div>
       <a
         href={frontendRoute.USER_PROFILE}
-        className="inline-block p-2 mr-2 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
+        className="inline-block p-2 mr-2 text-base text-yellow-50 font-medium text-center leading-6 bg-yellow-500 hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 rounded-md shadow-sm">
         <UserIcon className="h-4 w-4" />
       </a>
       <a

@@ -1,16 +1,10 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import Router, { useRouter } from 'next/router';
-import { frontendRoute } from '../constants/routes';
+import { useRouter } from 'next/router';
 import { CheckCircleIcon } from '@heroicons/react/solid';
 import { DotsCircleHorizontalIcon } from '@heroicons/react/outline';
 import { useState } from 'react';
 
-type Props = {
-  accessToken: string;
-  refreshToken: string;
-};
+
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -113,20 +107,5 @@ const Login: NextPage = () => {
       </div>
     </section>
   );
-};
-
-Login.getInitialProps = async (ctx): Promise<any> => {
-  // try {
-  //   // Validating access payload
-  //   if (ctx.query.error) throw ctx.query.error;
-
-  //   // Setting http-only cookies on client
-  //   const { accessToken, refreshToken } = ctx.query;
-  //   return { accessToken, refreshToken };
-  // } catch (err) {
-  //   console.error(err);
-  //   Router.push(frontendRoute.LANDING);
-  // }
-  return {};
 };
 export default Login;

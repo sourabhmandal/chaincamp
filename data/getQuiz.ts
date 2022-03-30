@@ -1,3 +1,4 @@
+import { backendRoute } from '../constants/routes';
 import {
   GET_ALL_QUIZ_IDS,
   GET_QUIZ_FROM_ID,
@@ -6,7 +7,7 @@ import {
 
 export const getQuiz = async (size: number): Promise<any[]> => {
   // get quiz ids
-  let res = await fetch('http://localhost:3000/api/graphql/gql', {
+  let res = await fetch(backendRoute.GQL, {
     method: 'POST',
     headers: {
       'x-hasura-role': 'user'
@@ -22,7 +23,7 @@ export const getQuiz = async (size: number): Promise<any[]> => {
   });
 
   // get random ids
-  res = await fetch('http://localhost:3000/api/graphql/gql', {
+  res = await fetch(backendRoute.GQL, {
     method: 'POST',
     headers: {
       'x-hasura-role': 'user'
@@ -37,7 +38,7 @@ export const getQuiz = async (size: number): Promise<any[]> => {
   data = json.data.get_random_quiz_id.id_list;
 
   // get random quiz from random ids
-  res = await fetch('http://localhost:3000/api/graphql/gql', {
+  res = await fetch(backendRoute.GQL, {
     method: 'POST',
     headers: {
       'x-hasura-role': 'user'

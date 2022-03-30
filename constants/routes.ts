@@ -2,7 +2,9 @@ export const backendRoute = {
   // oauth
   LOGIN: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/auth/signin`,
   LOGOUT: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/auth/signout`,
-  CALLBACK: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/auth/callback`
+  CALLBACK: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/auth/callback`,
+  GET_USER: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/getuser`,
+  GQL: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/graphql/gql`
 };
 export const frontendRoute = {
   QUIZ: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/quiz`,

@@ -1,3 +1,4 @@
+import { backendRoute } from '../constants/routes';
 import { CREATE_HISTORY } from '../pages/api/graphql/mutations/_score';
 
 type countAnsResp = { correct: number; wrong: number; unattempted: number };
@@ -20,7 +21,7 @@ export async function saveResultToDB(
   unattempted: number,
   user_email: string
 ) {
-  let res = await fetch('http://localhost:3000/api/graphql/gql', {
+  let res = await fetch(backendRoute.GQL, {
     method: 'POST',
     headers: {
       'x-hasura-role': 'user'
