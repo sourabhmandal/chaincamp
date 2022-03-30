@@ -9,10 +9,7 @@ export default async function handler(
   const secret = process.env.JWT_SECRET;
   let role = req.headers['x-hasura-role']?.toString() || 'anonymous';
   const token = await getToken({ req, secret, raw: true });
-  if (!token) {
-    // Not Signed in
-    res.status(401);
-  }
+  console.log(token);
 
   if (!token) {
     console.log({ error: 'no session id' });
@@ -20,13 +17,18 @@ export default async function handler(
     console.log('token found with role', role);
   }
   const reqbody = JSON.parse(req.body);
+  const headers: HeadersInit = token
+    ? {
+        authorization: `Bearer ${token}`,
+        'X-Hasura-Role': role
+      }
+    : {
+        'X-Hasura-Role': role
+      };
 
   const options: RequestInit = {
     method: 'POST',
-    headers: {
-      authorization: `Bearer ${token}`,
-      'X-Hasura-Role': role
-    },
+    headers: headers,
     body: JSON.stringify({
       query: reqbody.query,
       operationName: reqbody.operationName || 'MyQuery',
