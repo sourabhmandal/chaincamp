@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   //@ts-ignore
   const secret = process.env.JWT_SECRET;
-  const role = req.headers['x-hasura-role']?.toString()!;
+  let role = req.headers['x-hasura-role']?.toString() || 'anonymous';
   const token = await getToken({ req, secret, raw: true });
   if (!token) {
     // Not Signed in
@@ -22,9 +22,7 @@ export default async function handler(
   }
   const reqbody = JSON.parse(req.body);
 
-  console.log(token);
-
-  const options = {
+  const options: RequestInit = {
     method: 'POST',
     headers: {
       authorization: `Bearer ${token}`,
