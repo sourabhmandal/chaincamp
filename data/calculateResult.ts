@@ -1,4 +1,4 @@
-import { CREATE_HISTORY } from '../api/graphql/mutations/_score';
+import { CREATE_HISTORY } from '../pages/api/graphql/mutations/_score';
 
 type countAnsResp = { correct: number; wrong: number; unattempted: number };
 export function calculateResult(

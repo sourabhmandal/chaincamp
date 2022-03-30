@@ -2,7 +2,7 @@ import {
   GET_ALL_QUIZ_IDS,
   GET_QUIZ_FROM_ID,
   GET_RANDOM_QUIZ_IDS
-} from '../api/graphql/queries/_quiz';
+} from '../pages/api/graphql/queries/_quiz';
 
 export const getQuiz = async (size: number) => {
   // get quiz ids

@@ -9,7 +9,7 @@ import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import Loader from '../../components/Loader';
 import QuestionPanel from '../../components/quiz/QuestionPanel';
-import { getQuiz } from '../_data/getQuiz';
+import { getQuiz } from '../../data/getQuiz';
 import { frontendRoute } from '../../constants/routes';
 
 const Dashboard: NextPage = () => {

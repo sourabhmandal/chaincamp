@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { SparklesIcon } from '@heroicons/react/solid';
 import { useSession } from 'next-auth/react';
 import { Fragment } from 'react';
-import { saveResultToDB } from '../../pages/_data/calculateResult';
+import { saveResultToDB } from '../../data/calculateResult';
 
 export default function ResultModal({
   isOpen,
