@@ -21,8 +21,6 @@ export const getQuiz = async (size: number): Promise<any[]> => {
     return idObj.id;
   });
 
-  console.log(data);
-
   // get random ids
   res = await fetch('http://localhost:3000/api/graphql/gql', {
     method: 'POST',
@@ -35,7 +33,6 @@ export const getQuiz = async (size: number): Promise<any[]> => {
     })
   });
   json = await res.json();
-  console.log(json);
 
   data = json.data.get_random_quiz_id.id_list;
 
@@ -51,7 +48,6 @@ export const getQuiz = async (size: number): Promise<any[]> => {
     })
   });
   json = await res.json();
-  console.log(json);
   data = json.data.quiz.map((quiz: any) => {
     const {
       correct_answer,
@@ -69,6 +65,5 @@ export const getQuiz = async (size: number): Promise<any[]> => {
       option_list: [option_one, option_two, option_three, option_four]
     };
   });
-  console.log(data);
   return data;
 };

@@ -28,7 +28,6 @@ type QuizQuestion = {
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
-  const { size } = router.query;
   const [currentQuiz, setCurrentQuiz] = useState(0);
   const [quizlist, setquizlist] = useState<QuizQuestion[]>([
     { id: 0, question: '', option_list: ['', '', '', ''], correct_answer: 0 }
@@ -43,14 +42,17 @@ const Dashboard: NextPage = () => {
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
   ]);
   const session = useSession();
+  const { size } = router.query;
 
   useEffect(() => {
-    (async () => {
-      const data = await getQuiz(parseInt(size?.toString()!));
-      setquizlist(data);
-      setTimeout(() => setLoading(false), 4000);
-    })();
-  }, []);
+    if (router.query.size) {
+      (async () => {
+        const data = await getQuiz(parseInt(size?.toString()!));
+        setquizlist(data);
+        setTimeout(() => setLoading(false), 4000);
+      })();
+    }
+  }, [size, router.query]);
 
   const getResult = async () => {
     const ans = quizlist.map((quiz: QuizQuestion) => quiz.correct_answer);
@@ -92,7 +94,7 @@ const Dashboard: NextPage = () => {
         <button
           className="bg-purple-400 px-4 py-3  hover:bg-purple-500 disabled:bg-purple-300"
           onClick={() => setCurrentQuiz(prev => prev + 1)}
-          disabled={currentQuiz == 9}>
+          disabled={currentQuiz == quizlist.length - 1}>
           <ChevronDoubleRightIcon className="h-5 w-5 text-gray-50" />
         </button>
         <button

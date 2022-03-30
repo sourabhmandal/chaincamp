@@ -7,9 +7,9 @@ query MyQuery {
 `;
 
 export const GET_RANDOM_QUIZ_IDS = `
-query MyQuery($ids: [Int] = [], $size: Int) {
-  get_random_quiz_id(ids: $ids, size : $size) {
-    id_list,
+query MyQuery($ids: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], $size: Int! = 10) {
+  get_random_quiz_id(ids: $ids, size: $size) {
+    id_list
     size
   }
 }

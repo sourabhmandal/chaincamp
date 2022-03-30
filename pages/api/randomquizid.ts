@@ -18,6 +18,6 @@ export default function handler(
   console.log(`shuffled :: ${shuffled}, id_list :: ${id_list}`);
   response.status(200).json({
     id_list: id_list,
-    size: request.body.input.size
+    size: id_list.length
   });
 }
