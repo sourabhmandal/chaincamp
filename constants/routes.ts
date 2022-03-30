@@ -13,5 +13,6 @@ export const frontendRoute = {
   CALANDER: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/calander`,
   APPLICANT: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/applicants`,
   SETTINGS: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/settings`,
-  HELLO_API: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/hello`
+  HELLO_API: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/api/hello`,
+  USER_PROFILE: `${process.env['NEXT_PUBLIC_FRONTEND_BASE_URL']}/profile`
 };

@@ -22,6 +22,8 @@ export default async function handler(
   }
   const reqbody = JSON.parse(req.body);
 
+  console.log(token);
+
   const options = {
     method: 'POST',
     headers: {
@@ -30,7 +32,7 @@ export default async function handler(
     },
     body: JSON.stringify({
       query: reqbody.query,
-      operationName: 'MyQuery',
+      operationName: reqbody.operationName || 'MyQuery',
       variables: reqbody.vars
     })
   };
@@ -41,11 +43,10 @@ export default async function handler(
   );
   let data;
   if (!result.ok) {
-    res.send(result);
+    res.send({ error: 'error in fetching data' });
   } else {
     data = await result.json();
     res.send(data);
-    console.log(data);
   }
 
   return data;

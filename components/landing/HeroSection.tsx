@@ -2,8 +2,10 @@ import React from 'react';
 import Notionlogo from '/assets/notionlogo.svg';
 import Image from 'next/image';
 import { backendRoute, frontendRoute } from '../../constants/routes';
+import { useSession } from 'next-auth/react';
 
 export default function HeroSection() {
+  const session = useSession();
   return (
     <div className="w-full text-center flex flex-col items-center bg-gray-100 p-20 leading-10">
       <p className="tracking-tight leading-tight font-black text-6xl">
@@ -25,18 +27,26 @@ export default function HeroSection() {
         <div>Turn your Notion docs into a hosted self-service Knowledge</div>
         <div>Base for your customers – no code required.</div>
       </p>
-      <div className="grid grid-cols-2 grid-rows-1 gap-4">
+      {session.status == 'authenticated' ? (
         <a
-          href={backendRoute.LOGIN}
+          href={frontendRoute.QUIZ}
           className="mt-5 inline-block py-3 px-7 mb-6 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
-          Login and Start
+          Start Now Quiz
         </a>
-        <a
-          href={frontendRoute.DASHBOARD}
-          className="mt-5 inline-block py-3 px-7 mb-6 text-base text-green-500 font-medium text-center leading-6 bg-slate-200 hover:bg-slate-300 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
-          Try now without login
-        </a>
-      </div>
+      ) : (
+        <div className="grid grid-cols-2 grid-rows-1 gap-4">
+          <a
+            href={backendRoute.LOGIN}
+            className="mt-5 inline-block py-3 px-7 mb-6 text-base text-green-50 font-medium text-center leading-6 bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
+            Login and Start
+          </a>
+          <a
+            href={frontendRoute.QUIZ}
+            className="mt-5 inline-block py-3 px-7 mb-6 text-base text-green-500 font-medium text-center leading-6 bg-slate-200 hover:bg-slate-300 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md shadow-sm">
+            Try now without login
+          </a>
+        </div>
+      )}
     </div>
   );
 }

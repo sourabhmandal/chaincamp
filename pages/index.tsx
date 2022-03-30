@@ -11,16 +11,18 @@ import { useRouter } from 'next/router';
 import { frontendRoute } from '../constants/routes';
 import { useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
+import Loader from '../components/Loader';
 
 const Home: NextPage = () => {
-  const router = useRouter();
   const session = useSession();
   useEffect(() => {
-    if (session.status == 'authenticated') router.push(frontendRoute.QUIZ);
+    //if (session.status == 'authenticated') router.push(frontendRoute.QUIZ);
     return () => {};
   });
 
-  return (
+  return session.status == 'loading' ? (
+    <Loader />
+  ) : (
     <BaseStyles>
       <Head>
         <title>ChainCamp.io</title>
