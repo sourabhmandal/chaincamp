@@ -20,6 +20,7 @@ import { PlayIcon } from '@primer/octicons-react';
 import { useRouter } from 'next/router';
 
 type QuizQuestion = {
+  id: number;
   question: string;
   option_list: string[];
   correct_answer: number;
@@ -30,7 +31,7 @@ const Dashboard: NextPage = () => {
   const { size } = router.query;
   const [currentQuiz, setCurrentQuiz] = useState(0);
   const [quizlist, setquizlist] = useState<QuizQuestion[]>([
-    { question: '', option_list: [''], correct_answer: 0 }
+    { id: 0, question: '', option_list: ['', '', '', ''], correct_answer: 0 }
   ]);
   const [loading, setLoading] = useState(true);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
@@ -46,11 +47,10 @@ const Dashboard: NextPage = () => {
   useEffect(() => {
     (async () => {
       const data = await getQuiz(parseInt(size?.toString()!));
-      console.log(data);
-      setquizlist(data.id_list);
-      setLoading(false);
+      setquizlist(data);
+      setTimeout(() => setLoading(false), 4000);
     })();
-  }, [size]);
+  }, []);
 
   const getResult = async () => {
     const ans = quizlist.map((quiz: QuizQuestion) => quiz.correct_answer);
@@ -60,7 +60,7 @@ const Dashboard: NextPage = () => {
     setunattempted(unattempted);
     setIsResultModalOpen(true);
   };
-  return loading ? (
+  return loading || session.status === 'loading' ? (
     <Loader />
   ) : (
     <div className="overflow-x-hidden relative flex bg-orange-50 flex-col justify-center items-center w-screen h-screen">

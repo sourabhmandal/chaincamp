@@ -4,7 +4,7 @@ import {
   GET_RANDOM_QUIZ_IDS
 } from '../pages/api/graphql/queries/_quiz';
 
-export const getQuiz = async (size: number) => {
+export const getQuiz = async (size: number): Promise<any[]> => {
   // get quiz ids
   let res = await fetch('http://localhost:3000/api/graphql/gql', {
     method: 'POST',
@@ -16,9 +16,12 @@ export const getQuiz = async (size: number) => {
     })
   });
   let json = await res.json();
+
   let data: any = json.data.quiz.map((idObj: any) => {
     return idObj.id;
   });
+
+  console.log(data);
 
   // get random ids
   res = await fetch('http://localhost:3000/api/graphql/gql', {
@@ -28,11 +31,12 @@ export const getQuiz = async (size: number) => {
     },
     body: JSON.stringify({
       query: GET_RANDOM_QUIZ_IDS,
-      vars: { ids: data }
+      vars: { ids: data, size: size }
     })
   });
   json = await res.json();
   console.log(json);
+
   data = json.data.get_random_quiz_id.id_list;
 
   // get random quiz from random ids
@@ -47,6 +51,7 @@ export const getQuiz = async (size: number) => {
     })
   });
   json = await res.json();
+  console.log(json);
   data = json.data.quiz.map((quiz: any) => {
     const {
       correct_answer,
@@ -64,5 +69,6 @@ export const getQuiz = async (size: number) => {
       option_list: [option_one, option_two, option_three, option_four]
     };
   });
+  console.log(data);
   return data;
 };

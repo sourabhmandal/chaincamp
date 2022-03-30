@@ -6,6 +6,7 @@ export default function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  console.log(request.body);
   const id_array: [number] = request.body.input.ids;
   const size: number = request.body.input.size;
 

@@ -18,7 +18,6 @@ function LoggedUserCard() {
         })
       });
       const data = await resp.json();
-      console.log(data);
       setuser(data);
     })();
 
