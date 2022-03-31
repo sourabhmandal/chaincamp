@@ -12,7 +12,7 @@ query MyQuery($_eq: String = "19mandal97@gmail.com") {
 `;
 
 export const OVERALL_TOP_RANKING = `
-query MyQuery($_eq: String = "19mandal97@gmail.com") {
+query MyQuery {
   history(order_by: {score: desc_nulls_last}, limit: 5) {
     correct
     created_at

@@ -1,6 +1,7 @@
 import React from 'react';
 
 function TopScoreBoard({ data }: any) {
+  console.log(data);
   return (
     <table className="table-auto w-full">
       <thead className=" bg-orange-100">

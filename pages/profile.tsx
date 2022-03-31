@@ -5,35 +5,22 @@ import Loader from '../components/Loader';
 import { Navbar } from '../components/Navbar';
 import ScoreBoard from '../components/ScoreBoard';
 import { backendRoute, frontendRoute } from '../constants/routes';
-import { MY_TOP_RANKING } from './api/graphql/queries/_score';
+import {
+  MY_TOP_RANKING,
+  OVERALL_TOP_RANKING
+} from './api/graphql/queries/_score';
 import toast, { Toaster } from 'react-hot-toast';
 type RankCol = {
   score: number;
-  email: string;
+  user_email: string;
   correct: number;
   wrong: number;
   unattempted: number;
 };
 function Profile() {
   const session = useSession();
-  const [myTopRanks, setMyTopRanks] = useState<RankCol[]>([
-    {
-      score: 0,
-      email: session.data?.user?.email?.toString()!,
-      correct: 0,
-      wrong: 0,
-      unattempted: 0
-    }
-  ]);
-  const [overallTopRanks, setOverallTopRanks] = useState<RankCol[]>([
-    {
-      score: 0,
-      email: session.data?.user?.email?.toString()!,
-      correct: 0,
-      wrong: 0,
-      unattempted: 0
-    }
-  ]);
+  const [myTopRanks, setMyTopRanks] = useState<RankCol[]>([]);
+  const [overallTopRanks, setOverallTopRanks] = useState<RankCol[]>([]);
   const router = useRouter();
   const [loading, setloading] = useState(true);
 
@@ -59,8 +46,19 @@ function Profile() {
               return b.score - a.score;
             })
           );
-        } else if (mytopdata.data.history.length != 0) {
-          toast.error('please attempt a quiz before');
+        } else if (mytopdata.data.history.length == 0) {
+          toast.error('please attempt a quiz before', { icon: '⚠️' });
+          setMyTopRanks(prev => {
+            const newTopRank = [...prev];
+            newTopRank[0] = {
+              score: 0,
+              user_email: session.data?.user?.email?.toString()!,
+              correct: 0,
+              wrong: 0,
+              unattempted: 0
+            };
+            return newTopRank;
+          });
         } else {
           toast.error('Could not get data from server');
         }
@@ -71,8 +69,7 @@ function Profile() {
             'x-hasura-role': 'user'
           },
           body: JSON.stringify({
-            query: MY_TOP_RANKING,
-            vars: { _eq: session.data?.user?.email }
+            query: OVERALL_TOP_RANKING
           })
         });
         const overalltopdata = await overalltopresp.json();
@@ -82,8 +79,21 @@ function Profile() {
               return b.score - a.score;
             })
           );
-        } else if (mytopdata.data.history.length != 0) {
-          toast.error('please attempt a quiz before');
+        } else if (mytopdata.data.history.length == 0) {
+          setMyTopRanks(prev => {
+            const newOverallRank = [...prev];
+            newOverallRank[0] = {
+              score: 0,
+              user_email: session.data?.user?.email?.toString()!,
+              correct: 0,
+              wrong: 0,
+              unattempted: 0
+            };
+            return newOverallRank;
+          });
+          toast('please attempt a quiz before', {
+            icon: '⚠️'
+          });
         } else {
           toast.error('Could not get data from server');
         }
