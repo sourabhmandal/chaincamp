@@ -59,6 +59,8 @@ function Profile() {
               return b.score - a.score;
             })
           );
+        } else if (mytopdata.data.history.length != 0) {
+          toast.error('please attempt a quiz before');
         } else {
           toast.error('Could not get data from server');
         }
@@ -80,6 +82,8 @@ function Profile() {
               return b.score - a.score;
             })
           );
+        } else if (mytopdata.data.history.length != 0) {
+          toast.error('please attempt a quiz before');
         } else {
           toast.error('Could not get data from server');
         }
