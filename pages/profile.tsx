@@ -16,8 +16,24 @@ type RankCol = {
 };
 function Profile() {
   const session = useSession();
-  const [myTopRanks, setMyTopRanks] = useState<RankCol[]>([]);
-  const [overallTopRanks, setOverallTopRanks] = useState<RankCol[]>([]);
+  const [myTopRanks, setMyTopRanks] = useState<RankCol[]>([
+    {
+      score: 0,
+      email: session.data?.user?.email?.toString()!,
+      correct: 0,
+      wrong: 0,
+      unattempted: 0
+    }
+  ]);
+  const [overallTopRanks, setOverallTopRanks] = useState<RankCol[]>([
+    {
+      score: 0,
+      email: session.data?.user?.email?.toString()!,
+      correct: 0,
+      wrong: 0,
+      unattempted: 0
+    }
+  ]);
   const router = useRouter();
   const [loading, setloading] = useState(true);
 
@@ -36,7 +52,8 @@ function Profile() {
         });
         const mytopdata = await mytopresp.json();
 
-        if (!mytopdata.error) {
+        if (!mytopdata.error && mytopdata.data.history.length != 0) {
+          console.log('set data');
           setMyTopRanks(
             mytopdata.data.history.sort((a: any, b: any) => {
               return b.score - a.score;
@@ -57,7 +74,7 @@ function Profile() {
           })
         });
         const overalltopdata = await overalltopresp.json();
-        if (!overalltopdata.error) {
+        if (!overalltopdata.error && overalltopdata.data.history.length != 0) {
           setOverallTopRanks(
             overalltopdata.data.history.sort((a: any, b: any) => {
               return b.score - a.score;
