@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import { BaseStyles } from '@primer/react';
+import Head from 'next/head';
 import { Navbar } from '../components/Navbar';
 import HeroSection from '../components/landing/HeroSection';
 import Footer from '../components/landing/Footer';
@@ -22,7 +21,7 @@ const Home: NextPage = () => {
   return session.status == 'loading' ? (
     <Loader />
   ) : (
-    <BaseStyles>
+    <>
       <Toaster />
       <Head>
         <title>HasuraChamp</title>
@@ -44,7 +43,7 @@ const Home: NextPage = () => {
         <HeroSection />
         <Footer />
       </main>
-    </BaseStyles>
+    </>
   );
 };
 

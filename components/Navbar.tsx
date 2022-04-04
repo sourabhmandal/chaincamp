@@ -1,10 +1,7 @@
 import React from 'react';
 import hasura from '../assets/hasura.svg';
-import { Disclosure } from '@headlessui/react';
-import { ThreeBarsIcon, XIcon } from '@primer/octicons-react';
 import Image from 'next/image';
-import { Button } from '@primer/react';
-import { backendRoute, frontendRoute } from '../constants/routes';
+import { backendRoute } from '../constants/routes';
 import { useSession } from 'next-auth/react';
 import LoggedUserCard from './LoggedUserCard';
 import Loader from './Loader';
