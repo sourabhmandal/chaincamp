@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
 import hasura from '../../assets/hasura.svg';
 
 type QuestionPanelProps = {

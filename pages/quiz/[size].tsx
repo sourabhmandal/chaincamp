@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  ArrowCircleLeftIcon,
-  ArrowCircleRightIcon,
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
-  ThumbUpIcon,
+  PlayIcon,
   XIcon
 } from '@heroicons/react/solid';
 import { NextPage } from 'next';
@@ -12,11 +10,10 @@ import { useSession } from 'next-auth/react';
 import Loader from '../../components/Loader';
 import QuestionPanel from '../../components/quiz/QuestionPanel';
 import { getQuiz } from '../../data/getQuiz';
-import { calculateResult, saveResultToDB } from '../../data/calculateResult';
+import { calculateResult } from '../../data/calculateResult';
 import LoggedUserCard from '../../components/LoggedUserCard';
 import ResultModal from '../../components/quiz/result';
 import QuitModal from '../../components/quiz/quit';
-import { PlayIcon } from '@primer/octicons-react';
 import { useRouter } from 'next/router';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -70,9 +67,13 @@ const Dashboard: NextPage = () => {
     }
   };
   return loading || session.status === 'loading' ? (
-    <Loader />
+    <>
+      <Toaster />
+      <Loader />
+    </>
   ) : (
     <div className="overflow-x-hidden relative flex bg-orange-50 flex-col justify-center items-center w-screen h-screen">
+      <Toaster />
       <ResultModal
         isOpen={isResultModalOpen}
         setIsOpen={setIsResultModalOpen}
@@ -118,40 +119,6 @@ const Dashboard: NextPage = () => {
         selectedOpt={result[currentQuiz]}
         setresult={setresult}
       />
-      {/* <div className="mx-auto grid grid-cols-2 grid-rows-2 md:grid-cols-4 md:grid-rows-2 gap-x-3 md:gap-x-8 gap-y-3 mt-8">
-        <button className="bg-green-600 w-36 h-36 rounded-lg ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
-          <div className="flex flex-col">
-            <span className="px-2 rounded-full bg-white mx-auto">50/50</span>
-            <span className="mx-auto text-white font-bold text-center text-lg">
-              3
-            </span>
-          </div>
-        </button>
-        <button className="bg-green-600 w-36 h-36 rounded-lg ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
-          <div className="flex flex-col">
-            <span className="px-2 rounded-full bg-white mx-auto">Guess</span>
-            <span className="mx-auto text-white font-bold text-center text-lg">
-              3
-            </span>
-          </div>
-        </button>
-        <button className="bg-green-600 w-36 h-36 rounded-lg ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
-          <div className="flex flex-col">
-            <span className="px-2 rounded-full bg-white mx-auto">Pass</span>
-            <span className="mx-auto text-white font-bold text-center text-lg">
-              3
-            </span>
-          </div>
-        </button>
-        <button className="bg-green-600 w-36 h-36 rounded-lg ring-8 ring-inset ring-white border-2 border-green-500 hover:bg-orange-500 hover:border-orange-500 font-bold text-lg">
-          <div className="flex flex-col">
-            <span className="px-2 rounded-full bg-white mx-auto">Reveal</span>
-            <span className="mx-auto text-white font-bold text-center text-lg">
-              3
-            </span>
-          </div>
-        </button>
-      </div> */}
     </div>
   );
 };

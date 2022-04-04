@@ -1,5 +1,3 @@
-import React from 'react';
-
 function TopScoreBoard({ data }: any) {
   console.log(data);
   return (

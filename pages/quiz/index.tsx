@@ -1,4 +1,3 @@
-import React from 'react';
 import { NextPage } from 'next';
 import { frontendRoute } from '../../constants/routes';
 import { useSession } from 'next-auth/react';

@@ -1,10 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { SparklesIcon } from '@heroicons/react/solid';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { frontendRoute } from '../../constants/routes';
-import { saveResultToDB } from '../../data/calculateResult';
 
 export default function QuitModal({ isOpen, setIsOpen }: any) {
   function closeModal() {

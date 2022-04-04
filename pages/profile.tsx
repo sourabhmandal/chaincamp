@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import { Navbar } from '../components/Navbar';
 import ScoreBoard from '../components/ScoreBoard';
-import { backendRoute, frontendRoute } from '../constants/routes';
+import { backendRoute } from '../constants/routes';
 import {
   MY_TOP_RANKING,
   OVERALL_TOP_RANKING
