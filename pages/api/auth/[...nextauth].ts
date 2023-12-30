@@ -67,8 +67,7 @@ export default NextAuth({
   },
   secret: process.env.JWT_SECRET,
   callbacks: {
-    signIn: async ({ user }) => {
-      console.log('CREATING USER ON SIGNIN');
+    async signIn({ user }) {
       try {
         const result = await fetch(
           'https://guiding-gibbon-63.hasura.app/api/rest/create_user',
@@ -82,7 +81,7 @@ export default NextAuth({
             body: JSON.stringify({
               email: user?.email,
               name: user?.name,
-              picture_url: user?.picture,
+              picture_url: user?.image,
               role: 'user'
             })
           }
@@ -96,6 +95,7 @@ export default NextAuth({
         return true;
       } catch (err) {
         console.log(err);
+        return false;
       }
     }
   }
