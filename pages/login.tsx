@@ -1,10 +1,8 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { CheckCircleIcon } from '@heroicons/react/solid';
-import { DotsCircleHorizontalIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon } from '@heroicons/react/20/solid';
+import { EllipsisHorizontalCircleIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
-
-
 
 const Login: NextPage = () => {
   const router = useRouter();
@@ -72,7 +70,7 @@ const Login: NextPage = () => {
                   {remeber ? (
                     <CheckCircleIcon className="h-5 w-5 text-green-500" />
                   ) : (
-                    <DotsCircleHorizontalIcon className="h-5 w-5 text-green-500" />
+                    <EllipsisHorizontalCircleIcon className="h-5 w-5 text-green-500" />
                   )}
                   <span className="ml-7 text-xs text-coolGray-800 font-medium">
                     Remember me

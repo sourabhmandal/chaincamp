@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { SparklesIcon } from '@heroicons/react/solid';
+import { SparklesIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { frontendRoute } from '../../constants/routes';

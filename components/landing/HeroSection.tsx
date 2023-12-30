@@ -24,8 +24,8 @@ export default function HeroSection() {
       </p>
       <br />
       <p className="text-lg font-bold m-3 text-gray-500">
-        <div>Turn your Notion docs into a hosted self-service Knowledge</div>
-        <div>Base for your customers – no code required.</div>
+        <div>Test your Knowledge of hasura ecosystem using</div>
+        <div>Quizes from Hasura Champ.</div>
       </p>
       {session.status == 'authenticated' ? (
         <a

@@ -33,6 +33,8 @@ export async function saveResultToDB(
     })
   });
   let json = await res.json();
+
+  console.log(json);
   if (json.error) {
     return json;
   }

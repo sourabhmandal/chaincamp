@@ -34,10 +34,12 @@ function Profile() {
           },
           body: JSON.stringify({
             query: MY_TOP_RANKING,
-            vars: { _eq: session.data?.user?.email }
+            vars: { user_email_param: session.data?.user?.email }
           })
         });
         const mytopdata = await mytopresp.json();
+
+        console.log(mytopdata);
 
         if (!mytopdata.error && mytopdata.data.history.length != 0) {
           console.log('set data');

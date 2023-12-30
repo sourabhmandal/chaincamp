@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { backendRoute, frontendRoute } from '../constants/routes';
 import Loader from './Loader';
 import Avatar from 'boring-avatars';
-import { LogoutIcon, UserIcon } from '@heroicons/react/solid';
+import {
+  ArrowLeftStartOnRectangleIcon,
+  UserIcon
+} from '@heroicons/react/20/solid';
 
 function LoggedUserCard() {
   const session = useSession();
@@ -61,7 +64,7 @@ function LoggedUserCard() {
       <a
         href={backendRoute.LOGOUT}
         className="inline-block p-2 text-base text-green-50 font-medium text-center leading-6 bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded-md shadow-sm">
-        <LogoutIcon className="h-4 w-4" />
+        <ArrowLeftStartOnRectangleIcon className="h-4 w-4" />
       </a>
     </div>
   );

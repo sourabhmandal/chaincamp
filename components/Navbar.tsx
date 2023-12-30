@@ -24,7 +24,7 @@ export function Navbar() {
         <div className="flex-shrink-0 flex items-center">
           <Image
             height={40}
-            width={100}
+            width={40}
             src={hasura}
             alt="Workflow"
           />

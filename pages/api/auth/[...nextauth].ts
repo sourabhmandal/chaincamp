@@ -15,7 +15,7 @@ export default NextAuth({
           response_type: 'code'
         }
       },
-      checks: 'both'
+      checks: 'none'
     })
   ],
   jwt: {
@@ -68,30 +68,35 @@ export default NextAuth({
   secret: process.env.JWT_SECRET,
   callbacks: {
     signIn: async ({ user }) => {
-      const result = await fetch(
-        'https://guiding-gibbon-63.hasura.app/api/rest/create_user',
-        {
-          method: 'POST',
-          //@ts-ignore
-          headers: {
-            'content-type': 'application/json',
-            'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET
-          },
-          body: JSON.stringify({
-            email: user?.email,
-            name: user?.name,
-            picture_url: user?.picture,
-            role: 'user'
-          })
-        }
-      );
-      if (!result.ok) return false;
-      let userdata = await result.json();
-      console.log(
-        'Added user to database :: ',
-        JSON.stringify(userdata.insert_users_one)
-      );
-      return true;
+      console.log('CREATING USER ON SIGNIN');
+      try {
+        const result = await fetch(
+          'https://guiding-gibbon-63.hasura.app/api/rest/create_user',
+          {
+            method: 'POST',
+            //@ts-ignore
+            headers: {
+              'content-type': 'application/json',
+              'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET
+            },
+            body: JSON.stringify({
+              email: user?.email,
+              name: user?.name,
+              picture_url: user?.picture,
+              role: 'user'
+            })
+          }
+        );
+        if (!result.ok) return false;
+        let userdata = await result.json();
+        console.log(
+          'Added user to database :: ',
+          JSON.stringify(userdata.insert_users_one)
+        );
+        return true;
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 });

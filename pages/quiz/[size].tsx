@@ -3,8 +3,8 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   PlayIcon,
-  XIcon
-} from '@heroicons/react/solid';
+  XCircleIcon
+} from '@heroicons/react/20/solid';
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import Loader from '../../components/Loader';
@@ -90,7 +90,7 @@ const Dashboard: NextPage = () => {
         <button
           className="bg-red-500 px-4 py-3 hover:bg-red-700"
           onClick={() => setisQuitModalOpen(true)}>
-          <XIcon className="h-5 w-5 text-gray-50" />
+          <XCircleIcon className="h-5 w-5 text-gray-50" />
         </button>
 
         <button

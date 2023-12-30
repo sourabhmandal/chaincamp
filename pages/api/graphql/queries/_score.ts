@@ -1,6 +1,6 @@
 export const MY_TOP_RANKING = `
-query MyQuery($_eq: String = "19mandal97@gmail.com") {
-  history(where: {user_email: {_eq: $_eq}}, order_by: {correct: desc}, limit: 5, distinct_on: correct) {
+query MyQuery($user_email_param: String = "19mandal97@gmail.com") {
+  history(where: {user_email: {_eq: $user_email_param}}, order_by: {correct: desc}, limit: 5, distinct_on: correct) {
     correct
     created_at
     score

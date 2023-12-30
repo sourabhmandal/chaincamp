@@ -6,6 +6,7 @@ import {
 } from '../pages/api/graphql/queries/_quiz';
 
 export const getQuiz = async (size: number): Promise<any[]> => {
+  console.log('GET ALL QUIZES');
   // get quiz ids
   let res = await fetch(backendRoute.GQL, {
     method: 'POST',
@@ -17,7 +18,6 @@ export const getQuiz = async (size: number): Promise<any[]> => {
     })
   });
   let json = await res.json();
-
   let data: any = json.data.quiz.map((idObj: any) => {
     return idObj.id;
   });
